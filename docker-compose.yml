@@ -1,0 +1,38 @@
+version: "3.7"
+
+networks:
+  integration-tests:
+    driver: bridge
+
+services:
+  db:
+    build: ./backend/datastore
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=somethingoftheday
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+    container_name: postgres
+    networks:
+      - integration-tests
+  backend-build:
+    build:
+      context: ./backend
+      dockerfile: ./build.Dockerfile
+    environment:
+      - DB_HOST=db
+    image: something-backend-build-img
+    container_name: something-backend-build
+    depends_on:
+      - db
+    networks:
+      - integration-tests
+    command: tail -f /dev/null
+  frontend-build:
+    build:
+      context: ./frontend
+      dockerfile: ./build.Dockerfile
+    image: something-frontend-build-img
+    container_name: something-frontend-build
+    command: tail -f /dev/null

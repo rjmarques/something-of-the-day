@@ -1,0 +1,228 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="something-element"
+>
+  <div
+    className="main-content"
+  >
+    <header>
+      <div
+        className="title"
+      >
+        Something of the day 
+      </div>
+      <div>
+        <img
+          alt="happy"
+          src="ascihappy.png"
+        />
+      </div>
+    </header>
+    <div
+      className="something-box"
+    >
+      <p />
+      <div
+        className="spinner-grow text-info"
+        role="status"
+      >
+        <span
+          className="sr-only"
+        >
+          Loading...
+        </span>
+      </div>
+    </div>
+    <div
+      className="button-area"
+    >
+      <button
+        aria-label={null}
+        className="something-button btn btn-primary"
+        onClick={[Function]}
+        type="button"
+      >
+        Ooh La La
+         
+        <span
+          aria-label="kiss"
+          role="img"
+        >
+          💋
+        </span>
+      </button>
+    </div>
+  </div>
+  <footer>
+    <div
+      className="icons"
+    >
+      <span>
+        <a
+          href="https://github.com/rjmarques"
+          target="blank"
+        >
+          <img
+            alt="github"
+            src={
+              Object {
+                "ReactComponent": Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "render": [Function],
+                },
+                "__esModule": true,
+                "default": "github.svg",
+              }
+            }
+          />
+        </a>
+      </span>
+      <span>
+        <a
+          href="https://twitter.com/lgst_something"
+          target="blank"
+        >
+          <img
+            alt="twitter"
+            src={
+              Object {
+                "ReactComponent": Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "render": [Function],
+                },
+                "__esModule": true,
+                "default": "twitter.svg",
+              }
+            }
+          />
+        </a>
+      </span>
+    </div>
+    <div>
+      <span>
+        © Copyright 
+        2020
+         
+        <a
+          href="https://ricardomarques.dev"
+          target="blank"
+        >
+          Ricardo Marques
+        </a>
+      </span>
+    </div>
+  </footer>
+</div>
+`;
+
+exports[`renders correctly 2`] = `
+<div
+  className="something-element"
+>
+  <div
+    className="main-content"
+  >
+    <header>
+      <div
+        className="title"
+      >
+        Something of the day 
+      </div>
+      <div>
+        <img
+          alt="happy"
+          src="ascihappy.png"
+        />
+      </div>
+    </header>
+    <div
+      className="something-box"
+    >
+      <p>
+        Let's put a smile on that face!
+      </p>
+      <noscript />
+    </div>
+    <div
+      className="button-area"
+    >
+      <button
+        aria-label={null}
+        className="something-button btn btn-primary"
+        onClick={[Function]}
+        type="button"
+      >
+        Ooh La La
+         
+        <span
+          aria-label="kiss"
+          role="img"
+        >
+          💋
+        </span>
+      </button>
+    </div>
+  </div>
+  <footer>
+    <div
+      className="icons"
+    >
+      <span>
+        <a
+          href="https://github.com/rjmarques"
+          target="blank"
+        >
+          <img
+            alt="github"
+            src={
+              Object {
+                "ReactComponent": Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "render": [Function],
+                },
+                "__esModule": true,
+                "default": "github.svg",
+              }
+            }
+          />
+        </a>
+      </span>
+      <span>
+        <a
+          href="https://twitter.com/lgst_something"
+          target="blank"
+        >
+          <img
+            alt="twitter"
+            src={
+              Object {
+                "ReactComponent": Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "render": [Function],
+                },
+                "__esModule": true,
+                "default": "twitter.svg",
+              }
+            }
+          />
+        </a>
+      </span>
+    </div>
+    <div>
+      <span>
+        © Copyright 
+        2020
+         
+        <a
+          href="https://ricardomarques.dev"
+          target="blank"
+        >
+          Ricardo Marques
+        </a>
+      </span>
+    </div>
+  </footer>
+</div>
+`;
