@@ -1,7 +1,7 @@
 package store
 import (
-	"time"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 
@@ -13,39 +13,38 @@ func TestAdd(t *testing.T) {
 
 	somethings := []*model.Something{
 		&model.Something{
-			Id: 123,
+			Id:        123,
 			CreatedAt: time.Now(),
-			Text: "Lorem Ipsum",
+			Text:      "Lorem Ipsum",
 		},
 	}
 	s.Add(somethings)
 
 	saved := s.GetRand() // nothing else is in the store, so can only return the previous struct
 	assert.NotNil(t, saved)
-	assert.Equal(t, somethings[0].Id, saved.Id)
+	assert.Equal(t, somethings[0].Id+1, saved.Id)
 	assert.Equal(t, somethings[0].CreatedAt, saved.CreatedAt)
 	assert.Equal(t, somethings[0].Text, saved.Text)
 }
-
 
 func TestGetLatest(t *testing.T) {
 	s := NewStore()
 
 	somethings := []*model.Something{
 		&model.Something{
-			Id: 123,
+			Id:        123,
 			CreatedAt: time.Now(),
-			Text: "Lorem Ipsum",
+			Text:      "Lorem Ipsum",
 		},
 		&model.Something{
-			Id: 456,
+			Id:        456,
 			CreatedAt: time.Now(),
-			Text: "Carpe Diem",
+			Text:      "Carpe Diem",
 		},
 		&model.Something{
-			Id: 789,
+			Id:        789,
 			CreatedAt: time.Now(),
-			Text: "Per aspera ad astra",
+			Text:      "Per aspera ad astra",
 		},
 	}
 	s.Add(somethings)
@@ -56,3 +55,4 @@ func TestGetLatest(t *testing.T) {
 	assert.Equal(t, somethings[2].CreatedAt, latest.CreatedAt)
 	assert.Equal(t, somethings[2].Text, latest.Text)
 }
+

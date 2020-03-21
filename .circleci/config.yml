@@ -7,6 +7,5 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: make build_env
-      - run: docker exec something-backend-build sh -c "ls -l"
       - run: make test_all
       - run: make cleanup
