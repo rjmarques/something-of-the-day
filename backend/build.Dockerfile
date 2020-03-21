@@ -8,4 +8,8 @@ RUN apk update \
 ADD . /root/workspace/something-of-the-day
 WORKDIR /root/workspace/something-of-the-day
 
+# get dependencies
 RUN go mod download
+
+# update file permissions
+RUN chmod 777 ./db-test.sh

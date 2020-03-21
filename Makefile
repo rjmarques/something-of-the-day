@@ -9,7 +9,7 @@ build_env:
 cleanup:
 	echo "Bringing down the build system"
 	docker-compose down -v
-	docker rm -f temp-something-of-the-day
+	# docker rm -f temp-something-of-the-day
 
 test_all: test_ui test_backend test_integration
 
