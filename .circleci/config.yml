@@ -6,6 +6,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: pwd
-      - run: ls -l
-      - run: docker version
+      - run: make build_env
+      - run: make test_integration
+      - run: make cleanup
