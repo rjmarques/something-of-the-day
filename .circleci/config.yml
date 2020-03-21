@@ -7,5 +7,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: make build_env
-      - run: make test_integration
+      - run: docker ps
+      - run: docker exec something-backend-build go test ./...
+      - run: docker exec something-backend-build ./backend/db-test.sh
       - run: make cleanup
