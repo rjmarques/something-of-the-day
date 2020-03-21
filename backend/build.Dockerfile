@@ -7,3 +7,5 @@ RUN apk update \
 # copy the local files to the container's workspace
 ADD . /root/workspace/something-of-the-day
 WORKDIR /root/workspace/something-of-the-day
+
+RUN go mod download
