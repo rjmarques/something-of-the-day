@@ -22,7 +22,7 @@ func TestAdd(t *testing.T) {
 
 	saved := s.GetRand() // nothing else is in the store, so can only return the previous struct
 	assert.NotNil(t, saved)
-	assert.Equal(t, somethings[0].Id+1, saved.Id)
+	assert.Equal(t, somethings[0].Id, saved.Id)
 	assert.Equal(t, somethings[0].CreatedAt, saved.CreatedAt)
 	assert.Equal(t, somethings[0].Text, saved.Text)
 }
