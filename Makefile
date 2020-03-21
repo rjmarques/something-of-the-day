@@ -23,7 +23,7 @@ test_backend:
 
 test_integration:
 	echo "Running backend integration tests"
-	docker exec something-backend-build ./db-test.sh
+	docker exec something-backend-build sh -c "./db-test.sh"
 
 build:
 	echo "Building the app"
