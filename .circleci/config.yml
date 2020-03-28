@@ -5,7 +5,17 @@ jobs:
       - image: cimg/base:2020.01
     steps:
       - checkout
+
       - setup_remote_docker
-      - run: make build_env
-      - run: make test_all
-      - run: make cleanup
+
+      - run:
+          name: start Docker build build
+          command: make build_env
+
+      - run:
+          name: run all tests
+          command: make test_all
+
+      - run:
+          name: tear down build environment
+          command: make cleanup
