@@ -9,13 +9,21 @@ jobs:
       - setup_remote_docker
 
       - run:
-          name: start Docker build build
+          name: Start Docker build environment
           command: make build_env
 
       - run:
-          name: run all tests
-          command: make test_all
+          name: Run UI Tests
+          command: make test_ui
 
       - run:
-          name: tear down build environment
+          name: Run Backend Tests
+          command: make test_backend
+
+      - run:
+          name: Run Integration Tests
+          command: make test_integration
+
+      - run:
+          name: Tear down build environment
           command: make cleanup

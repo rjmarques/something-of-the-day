@@ -9,7 +9,6 @@ build_env:
 cleanup:
 	echo "Bringing down the build system"
 	docker-compose down -v
-	# docker rm -f temp-something-of-the-day
 
 test_all: test_ui test_backend test_integration
 
@@ -23,15 +22,16 @@ test_backend:
 
 test_integration:
 	echo "Running backend integration tests"
-	docker exec something-backend-build sh -c "./db-test.sh"
+	docker exec something-backend-build sh "./db-test.sh"
 
 build:
 	echo "Building the app"
-	docker build . -t rjmarques/something-of-the-day
+	docker build -t rjmarques/something-of-the-day .
 	docker create -ti --name temp-something-of-the-day rjmarques/something-of-the-day bash
 	docker cp temp-something-of-the-day:/home/something-of-the-day - > ./something-of-the-day.tar
 	echo "Artifacts stored in: something-of-the-day.tar"
 	echo "Runnable docker image: rjmarques/something-of-the-day"
+	docker rm -f temp-something-of-the-day
 
 # run:
 # 	echo "Running the app in a container"
