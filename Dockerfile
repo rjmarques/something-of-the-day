@@ -15,7 +15,7 @@ WORKDIR /home/something-of-the-day
 
 COPY --from=backend-build /root/workspace/something-of-the-day/something-of-the-day .
 
-COPY --from=frontend-build /root/workspace/something-of-the-day/build ./frontend/build
+COPY --from=frontend-build /root/workspace/something-of-the-day/build ./frontend
 
 EXPOSE 80
 

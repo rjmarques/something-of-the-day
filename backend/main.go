@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"os"
 
 	_ "github.com/lib/pq"
@@ -21,18 +20,9 @@ func main() {
 	sotd.Start()
 }
 
-const (
-	port   = 5432
-	user   = "postgres"
-	dbname = "somethingoftheday"
-)
-
 func getDBConn() *sql.DB {
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-		"password=%s dbname=%s sslmode=disable",
-		os.Getenv("HOST"), port, user, os.Getenv("DB_PASS"), dbname)
-
-	db, err := sql.Open("postgres", psqlInfo)
+	url := os.Getenv("POSTGRES_URL")
+	db, err := sql.Open("postgres", url)
 	if err != nil {
 		panic(err)
 	}
@@ -44,4 +34,3 @@ func getDBConn() *sql.DB {
 
 	return db
 }
-

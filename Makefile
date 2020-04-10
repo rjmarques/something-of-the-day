@@ -27,12 +27,9 @@ test_integration:
 build:
 	echo "Building the app"
 	docker build -t rjmarques/something-of-the-day .
-	docker create -ti --name temp-something-of-the-day rjmarques/something-of-the-day bash
-	docker cp temp-something-of-the-day:/home/something-of-the-day - > ./something-of-the-day.tar
-	echo "Artifacts stored in: something-of-the-day.tar"
 	echo "Runnable docker image: rjmarques/something-of-the-day"
 	docker rm -f temp-something-of-the-day
 
-# run:
-# 	echo "Running the app in a container"
-# 	docker run --name something-of-the-day --rm --publish=80:80 rjmarques/something-of-the-day
+run:
+	echo "Running the app in a container"
+	docker run -e POSTGRES_URL -e CLIENT_SECRET -e CLIENT_ID --name something-of-the-day --rm --publish=80:80 rjmarques/something-of-the-day

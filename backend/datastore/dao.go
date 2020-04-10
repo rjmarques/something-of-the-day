@@ -9,7 +9,7 @@ import (
 	"github.com/rjmarques/something-of-the-day/model"
 )
 
-const dbQueryTimeout = 30 * time.Second
+const dbQueryTimeout = 120 * time.Second
 
 type DAO struct {
 	db *sql.DB

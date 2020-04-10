@@ -1,0 +1,5 @@
+ecs_cluster = "sotd-cluster"
+ecs_key_pair_name = "$ECS_KEY_PAIR_NAME"
+max_instance_size = "1"
+min_instance_size = "1"
+desired_capacity = "1"
