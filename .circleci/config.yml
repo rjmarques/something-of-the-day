@@ -26,4 +26,4 @@ jobs:
 
       - run:
           name: Tear down build environment
-          command: make cleanup
+          command: make clean
