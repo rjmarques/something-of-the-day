@@ -1,5 +1,5 @@
 resource "aws_launch_configuration" "ecs-launch-configuration" {
-    name                        = "ecs-launch-configuration"
+    name_prefix                 = "ecs-launch-configuration"
     image_id                    = "ami-03ec263c71e44528d"
     instance_type               = "t3.nano"
     iam_instance_profile        = aws_iam_instance_profile.ecs-instance-profile.id
@@ -14,9 +14,9 @@ resource "aws_launch_configuration" "ecs-launch-configuration" {
       create_before_destroy = true
     }
 
-    security_groups             = [aws_security_group.allow_http.id]
+    security_groups             = [aws_security_group.ecs_security_group.id]
     associate_public_ip_address = "true"
-    # TODO key_name                    = "${var.ecs_key_pair_name}"
+    key_name                    = var.ecs_key_pair_name
     user_data                   = <<EOF
                                   #!/bin/bash
                                   echo ECS_CLUSTER=${var.ecs_cluster} >> /etc/ecs/ecs.config

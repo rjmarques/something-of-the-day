@@ -6,7 +6,7 @@ resource "aws_autoscaling_group" "ecs-autoscaling-group" {
     vpc_zone_identifier         = [aws_default_subnet.default.id]
     launch_configuration        = aws_launch_configuration.ecs-launch-configuration.name
     tag {
-        key                     = "name"
+        key                     = "Name"
         value                   = "something-of-the-day"
         propagate_at_launch     = true
     }
