@@ -8,11 +8,11 @@ jobs:
 
       - setup_remote_docker
 
-      - aws-cli/install
+      - aws-cli/setup
 
       - run: 
           name: Install dependencies
-          command: aws --version
+          command: aws ecr describe-repositories --region $AWS_DEFAULT_REGION
 
       # - run:
       #     name: Start Docker build environment
