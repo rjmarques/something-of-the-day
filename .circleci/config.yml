@@ -8,41 +8,32 @@ jobs:
 
       - setup_remote_docker
 
-      - run:
-          name: Start Docker build environment
-          command: make build_env
+      - run: 
+          name: Install dependencies
+          command: aws --version
 
-      - run:
-          name: Run UI Tests
-          command: make test_ui
+      # - run:
+      #     name: Start Docker build environment
+      #     command: make build_env
 
-      - run:
-          name: Run Backend Tests
-          command: make test_backend
+      # - run:
+      #     name: Run UI Tests
+      #     command: make test_ui
 
-      - run:
-          name: Run Integration Tests
-          command: make test_integration
+      # - run:
+      #     name: Run Backend Tests
+      #     command: make test_backend
 
-      - run:
-          name: Tear down build environment
-          command: make clean
-  deploy:
-    docker:
-      - image: cimg/base:2020.01
-    steps:
-      - run:
-          name: "Deploy to ECS"
-          command: docker images
+      # - run:
+      #     name: Run Integration Tests
+      #     command: make test_integration
 
-workflows:
-  version: 2
-  build_and_deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: ci
+      # - run:
+      #     name: Tear down build environment
+      #     command: make clean
+
+      # - run:
+      #     name: "Deploy to ECS"
+      #     command: docker images
+orbs:
+  aws-cli: circleci/aws-cli@1.0.0      
