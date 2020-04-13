@@ -10,32 +10,28 @@ jobs:
 
       - aws-cli/setup
 
-      - run: 
-          name: Install dependencies
-          command: aws ecr get-login-password --region ${TF_VAR_region} | docker login --username AWS --password-stdin ${ECR}
+      - run:
+          name: Start Docker build environment
+          command: make build_env
 
-      # - run:
-      #     name: Start Docker build environment
-      #     command: make build_env
+      - run:
+          name: Run UI Tests
+          command: make test_ui
 
-      # - run:
-      #     name: Run UI Tests
-      #     command: make test_ui
+      - run:
+          name: Run Backend Tests
+          command: make test_backend
 
-      # - run:
-      #     name: Run Backend Tests
-      #     command: make test_backend
+      - run:
+          name: Run Integration Tests
+          command: make test_integration
 
-      # - run:
-      #     name: Run Integration Tests
-      #     command: make test_integration
+      - run:
+          name: Tear down build environment
+          command: make clean
 
-      # - run:
-      #     name: Tear down build environment
-      #     command: make clean
-
-      # - run:
-      #     name: "Deploy to ECS"
-      #     command: docker images
+      - run:
+          name: "Deploy to ECS"
+          command: make deploy
 orbs:
   aws-cli: circleci/aws-cli@1.0.0      
