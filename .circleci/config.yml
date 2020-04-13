@@ -28,8 +28,6 @@ jobs:
           name: Tear down build environment
           command: make clean
   deploy:
-    requires:
-      - build
     docker:
       - image: cimg/base:2020.01
     steps:
