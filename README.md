@@ -165,11 +165,11 @@ The domain part of the URL identifies your account and region, on AWS's ECR serv
 During deployment we'll need the full URL and also the URL without the repository name. As such we add the following lines to the `~/.bash_profile`: 
 
 ```
-export ERC=<the domain part of the ecr_repository_url> # without the /something-of-the-day
-export ERC_REPO=$ERC/something-of-the-day
+export ECR=<the domain part of the ecr_repository_url> # without the /something-of-the-day
+export ECR_REPO=$ECR/something-of-the-day
 ```
 
-If you then run `echo $ERC_REPO` the output should be equal to _ecr_repository_url_.
+If you then run `echo $ECR_REPO` the output should be equal to _ecr_repository_url_.
 
 ## Application building and deployment
 
