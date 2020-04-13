@@ -27,6 +27,10 @@ jobs:
           command: make test_integration
 
       - run:
+          name: Build the App image
+          command: make build
+
+      - run:
           name: Tear down build environment
           command: make clean
 
