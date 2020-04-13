@@ -28,7 +28,8 @@ jobs:
           name: Tear down build environment
           command: make clean
   deploy:
-    requires: build
+    requires:
+      - build
     steps:
       - run:
           name: "Deploy to ECS"
