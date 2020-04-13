@@ -1,36 +1,38 @@
 version: 2.1
-jobs:
-  build:
-    docker:
-      - image: cimg/base:2020.01
-    steps:
-      - checkout
+workflows:
+  build-and-deploy:
+    jobs:
+      build:
+        docker:
+          - image: cimg/base:2020.01
+        steps:
+          - checkout
 
-      - setup_remote_docker
+          - setup_remote_docker
 
-      - run:
-          name: Start Docker build environment
-          command: make build_env
+          - run:
+              name: Start Docker build environment
+              command: make build_env
 
-      - run:
-          name: Run UI Tests
-          command: make test_ui
+          - run:
+              name: Run UI Tests
+              command: make test_ui
 
-      - run:
-          name: Run Backend Tests
-          command: make test_backend
+          - run:
+              name: Run Backend Tests
+              command: make test_backend
 
-      - run:
-          name: Run Integration Tests
-          command: make test_integration
+          - run:
+              name: Run Integration Tests
+              command: make test_integration
 
-      - run:
-          name: Tear down build environment
-          command: make clean
-  deploy:
-    requires:
-      - build
-    steps:
-      - run:
-          name: "Deploy to ECS"
-          command: docker images
+          - run:
+              name: Tear down build environment
+              command: make clean
+      deploy:
+        requires:
+          - build
+        steps:
+          - run:
+              name: "Deploy to ECS"
+              command: docker images
