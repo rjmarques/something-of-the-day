@@ -8,6 +8,8 @@ jobs:
 
       - setup_remote_docker
 
+      - aws-cli/install
+
       - run: 
           name: Install dependencies
           command: aws --version
