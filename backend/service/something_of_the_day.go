@@ -66,10 +66,12 @@ func (sm *SomethingOfTheDay) update() {
 	for {
 		select {
 		case <-t:
-			var sinceId int64 = firstRelevantTweetID
+			var sinceId int64
 			if latestSomething := sm.st.GetLatest(); latestSomething != nil {
-				log.Printf("didn't found a something in the store, defaulting to something ID %d", firstRelevantTweetID)
 				sinceId = latestSomething.Id
+			} else {
+				log.Printf("didn't find a something in the store, defaulting to something ID %d", firstRelevantTweetID)
+				sinceId = firstRelevantTweetID
 			}
 
 			somethings, err := sm.sc.GetNewerSomethings(sinceId)
