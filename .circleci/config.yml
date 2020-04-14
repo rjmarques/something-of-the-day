@@ -32,10 +32,11 @@ jobs:
 
       - run:
           name: "Deploy to ECS"
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "ci" ]; then
-                make deploy
-            fi
+          command: make deploy
+          # command: |
+            # if [ "${CIRCLE_BRANCH}" == "ci" ]; then
+            #     make deploy
+            # fi
 
       # - run:
       #     name: Tear down build environment
