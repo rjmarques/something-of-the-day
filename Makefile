@@ -38,4 +38,5 @@ deploy:
 	# aws ecr get-login-password --region ${TF_VAR_region} | docker login --username AWS --password-stdin ${ECR}
 	# docker tag rjmarques/something-of-the-day:latest ${ECR_REPO}:latest
 	# docker push ${ECR_REPO}:latest
-	aws ecs update-service --cluster sotd-cluster --service sotd-ecs-service --region ${TF_VAR_region} --force-new-deployment --query 'service.events[0]'
+	aws ecs update-service --cluster sotd-cluster --service sotd-ecs-service --region ${TF_VAR_region} --force-new-deployment > deploy.output
+	cat deploy.output
