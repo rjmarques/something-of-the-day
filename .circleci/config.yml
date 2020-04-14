@@ -31,11 +31,15 @@ jobs:
           command: make build
 
       - run:
-          name: Tear down build environment
-          command: make clean
+          name: "Deploy to ECS"
+          command:
+            if [ "${CIRCLE_BRANCH}" == "ci" ]; then
+                make deploy
+            fi
 
       - run:
-          name: "Deploy to ECS"
-          command: make deploy
+          name: Tear down build environment
+          command: make clean            
+
 orbs:
   aws-cli: circleci/aws-cli@1.0.0      
