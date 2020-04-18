@@ -1,8 +1,6 @@
 ## Backend build
 FROM something-backend-build-img as backend-build
 RUN GOOS=linux GOARCH=amd64 go build
-RUN pwd
-RUN ls
 
 ## Frontend build
 FROM something-frontend-build-img as frontend-build
@@ -17,7 +15,7 @@ WORKDIR /home/something-of-the-day
 
 COPY --from=backend-build /root/workspace/something-of-the-day/something-of-the-day .
 
-COPY --from=frontend-build /root/workspace/something-of-the-day/build ./frontend/build
+COPY --from=frontend-build /root/workspace/something-of-the-day/build ./frontend
 
 EXPOSE 80
 
