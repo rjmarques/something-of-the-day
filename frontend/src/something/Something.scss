@@ -7,7 +7,11 @@
   min-width: 360px;
   max-width: 780px;
   margin: 0px auto;
-  padding: 40px 15px 0px 15px;
+  padding: 20px 15px 0px 15px;
+
+  @include for-size(laptop-small-up) {
+    padding-top: 40px;
+  }
 
   .main-content {
     flex: 1 0 auto;
