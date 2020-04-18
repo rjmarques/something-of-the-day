@@ -1,0 +1,27 @@
+/** Responsive rule wrappes **/
+$phone-upper-boundary: 425px;
+$tablet-upper-boundary: 768px;
+$laptop-small-upper-boundary: 992px;
+$laptop-upper-boundary: 1440px;
+
+@mixin for-size($range) {
+    @if $range == tablet-up {
+        @media (min-width: $phone-upper-boundary) { @content; }
+    }
+
+    @else if $range == laptop-small-up {
+        @media (min-width: $tablet-upper-boundary) { @content; }
+    }
+
+    @else if $range == laptop-up {
+        @media (min-width: $laptop-small-upper-boundary) { @content; }
+    }
+
+    @else if $range == desktop-up {
+        @media (min-width: $laptop-upper-boundary) { @content; }
+    }
+
+    @else {
+        @warn "For-size mixin supports: tablet-up, laptop-small-up, laptop-up, desktop-up";
+    }
+}

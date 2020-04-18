@@ -2,6 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/rjmarques/something-of-the-day/tree/master.svg?style=svg)](https://circleci.com/gh/rjmarques/something-of-the-day/tree/master)
 
+http://something.ricardomarq.com
+
 This document explains how to build and deploy the **something-of-the-day App**. The app is a completely over-engineered React Single Page Web App that has a Golang backend and connects to a PG database. The app runs locally on Docker, is deployed to AWS ECS and links to an Heroku database. There's also a CI workflow set up on CircleCI, that automatically deploys the app when code is merged to master and passes all the tests.
 
 The goal was to learn a bit about AWS ECS, Terraform, Docker, as well as to set up a relatively reaslistic CI/CD.
