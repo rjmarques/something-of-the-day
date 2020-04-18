@@ -1,10 +1,13 @@
+@import "../theme.scss";
+
 .something-element {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  min-width: 360px;
   max-width: 780px;
   margin: 0px auto;
-  padding: 40px 0px 0px 0px;
+  padding: 40px 15px 0px 15px;
 
   .main-content {
     flex: 1 0 auto;
@@ -17,7 +20,11 @@
       display: flex;
       flex-flow: column;
       font-family: BirdsofParadise;
-      font-size: 65px;
+      font-size: 45px;
+
+      @include for-size(laptop-small-up) {
+        font-size: 65px;
+      }
 
       .title {
         align-self: center;
@@ -30,9 +37,14 @@
         border-radius: 5px;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
           0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        height: 148px;
+        height: 120px;
         opacity: 0.8;
-        width: 148px;
+        width: 120px;
+
+        @include for-size(tablet-up) {
+          height: 148px;          
+          width: 148px;
+        }
       }
     }
 
