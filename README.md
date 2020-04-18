@@ -63,7 +63,7 @@ export HEROKU_API_KEY=<TOKEN>
 
 ## Twitter
 
-This app gets its _somethings_ entirely from Twitter, specifically this account: https://twitter.com/lgst_something. You'll need to go to the Twitter [developer section](https://developer.twitter.com/en/apps) and create a new app and copy the API keys. Once you have them add them to your `~/.bash_profile` as:
+This app gets its _somethings_ entirely from Twitter, specifically this account: https://twitter.com/lgst_something. You'll need to go to the Twitter [developer section] (https://developer.twitter.com/en/apps) and create a new app and copy the API keys. Once you have them add them to your `~/.bash_profile` as:
 
 ```
 export TF_VAR_twitter_client_id=<your_API_key>
@@ -72,7 +72,7 @@ export TF_VAR_twitter_client_secret=<your_API_secret_key>
 
 ## AWS
 
-This app was build to be able to provision itself on AWS from the ground without much faff. However, you still need to specify enough information about where and how that provisioning will take place.
+This app was built to be able to provision itself on AWS from the ground without much faff. However, you still need to specify enough information about where and how that provisioning will take place.
 
 First thing we will need is a new AMI User that has enough permissions to create a whole ECS environment on the AWS account. For the sake of simplicity I ran my user as admin, albeit in a real environment the permissions should be more locked down.
 
@@ -90,7 +90,7 @@ And add it to the `~/.bash_profile`:
 export TF_VAR_account_id=<the id obtained from the last command>
 ```
 
-While we're at it we also need to specify where in the AWS cloud we will run the app. I picked London, as such I added the following variables to my `~/.bash_profile`:
+While we're at it we also need to specify where in the AWS cloud the app will be running. I picked London, as such I added the following variables to my `~/.bash_profile`:
 
 ```
 export TF_VAR_region=eu-west-2
@@ -132,7 +132,7 @@ terraform apply
 
 If everything went well, your new something-of-the-day environment is now up and provisioned! 🎉
 
-The command should also have outputed a few values:
+The command should also have outputted a few values:
 * _ecr_repository_url_
 * _heroku_db_url_
 
@@ -142,7 +142,7 @@ _NOTE: To avoid needing an extra service to provide runtime params, this applica
 
 ## Postgres DB
 
-Before we run our app we need to initialize the DB with the schema and tables the app needs to access. The _heroku_db_url_, that was outputed when we ran `terraform apply`, follows the typical PG URL normally use to connect to a PG datase. That is, `postgres://user:password@host:5432/database_name`.
+Before we run our app, we need to initialize the DB with the schema and tables the app needs to access. The _heroku_db_url_, that was outputed when we ran `terraform apply`, follows the typical PG URL normally use to connect to a PG datase. That is, `postgres://user:password@host:5432/database_name`.
 
 Using this URL we should now initialize the DB with the app's schema. The latter are available at:
 
@@ -260,7 +260,9 @@ docker logs <the_container's_name> | grep "whatever I'm trying to find"
 
 ## Possible Improvements
 
-* The way I'm overriding terraform variables is perhaps not the cleanest one and caused a few duplications in the `~/.bash_profile`.
+* The way I'm overriding terraform variables is perhaps not the cleanest one and caused duplications in the `~/.bash_profile`.
 * Unprovisioning the env with terraform leaves behind AWS secrets, as AWS does not delete them immediately. This can cause problems if we want later to re-provision everything.
 * Non master branches do not save images to the ECR repo but could do so. 
-* The ECS roles created for this app can potentially collide with ones already existing if the terraform scripts are ran on AWS accounts with existing ECS clusters.
+* The ECS roles created for this app can potentially collide with ones already existing if the terraform scripts are ran against AWS accounts with existing ECS clusters.
+
+
