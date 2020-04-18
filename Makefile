@@ -29,9 +29,13 @@ build:
 	docker build -t rjmarques/something-of-the-day .
 	echo "Runnable docker image: rjmarques/something-of-the-day"
 
+run_with_localdb:
+	echo "Running the app in a container"
+	docker run -e POSTGRES_URL -e CLIENT_SECRET -e CLIENT_ID --name something-of-the-day --rm --publish=80:80 --network=something-of-the-day_integration-tests rjmarques/something-of-the-day
+
 run:
 	echo "Running the app in a container"
-	docker run -e ${POSTGRES_URL} -e ${CLIENT_SECRET} -e ${CLIENT_ID} --name something-of-the-day --rm --publish=80:80 rjmarques/something-of-the-day
+	docker run -e POSTGRES_URL -e CLIENT_SECRET -e CLIENT_ID --name something-of-the-day --rm --publish=80:80 rjmarques/something-of-the-day	
 
 deploy:
 	echo "Deploying the app to ECS"

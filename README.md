@@ -1,10 +1,12 @@
 # Something of the day 
 
+[![CircleCI](https://circleci.com/gh/rjmarques/something-of-the-day/tree/master.svg?style=svg)](https://circleci.com/gh/rjmarques/something-of-the-day/tree/master)
+
 This document explains how to build and deploy the **something-of-the-day App**. The app is a completely over-engineered React Single Page Web App that has a Golang backend and connects to a PG database. The app runs locally on Docker, is deployed to AWS ECS and links to an Heroku database. There's also a CI workflow set up on CircleCI, that automatically deploys the app when code is merged to master and passes all the tests.
 
 The goal was to learn a bit about AWS ECS, Terraform, Docker, as well as to set up a relatively reaslistic CI/CD.
 
-##### DISCLAIMER: It goes without saying that a trivial static webpage does not need: React, Docker, Postgresql, etc. The complexity was introduced to allow me to build realistic CI workflow. I.e., have good frontend build & tests, backend build & test, and DB integration tests. Plus, I wanted to push everything to containers as much as possible. Oh and Heroku provides a tiny database for free - win!
+##### DISCLAIMER: It goes without saying that a trivial static webpage does not need: React, Docker, Postgresql, etc. The complexity was introduced to allow me to build realistic CI workflow. I.e., have good frontend build & tests, backend build & test, and DB integration tests. Plus, I wanted to push everything to containers as much as possible. Oh and Heroku provides a tiny database for free - win! 💰
 
 ## Minimal requirements to build and run
 
@@ -95,6 +97,12 @@ export TF_VAR_region=eu-west-2
 export TF_VAR_availability_zone=eu-west-2a
 ```
 
+You must add a keypair to AWS, or use a pre-existing one, that will allow you to SSH into the EC2 instance. Add the name of the keypair to your `~/.bash_profile` as:
+
+```
+export TF_VAR_ecs_key_pair_name=<my-aws-ssh-keypair>
+```
+
 ## Terraform provisioning
 Make sure all your changes to the `~/.bash_profile` are available from the terminal you're trying to run terraform. Also, all Terraform commands should be run from within the _provision_ folder, so please:
 
@@ -178,14 +186,81 @@ TL;DR:
 * To build run: `make`
 * To deploy run: `make deploy`
 
-If you inspect the _Makefile_ you can see the steps that each of the previous commands is issuing. I'll shortly go over each one to explain what they do.
+If you inspect the _Makefile_ you can see the steps that each of the previous commands is running. I'll quickly go over each one.
 
 ### make
 
+Builds the whole app and runs unit + integration tests. The resulting docker image. representing the production ready app, will be available as _rjmarques/something-of-the-day_. 
+
+The build steps are run in docker containers that encapsultate the frontend (nodejs) and backend (golang) environments. Additionally, the integration tests will run against a local Postgres database (also running in a container). The whoe build/test cluster is created using _docker-compose_. 
+
+The first time `make` is run it can take a while to finish, as new images are pulled from the internet.
+
 ### make deploy
+
+Once `make` has been run, and _rjmarques/something-of-the-day_ is created, we can push the image to the ECR repository and consequently update the ECS service that's using it, thus fully deploying the app.
+
+To push to ECR we first tag the image with the ECR URL, represented by _$ECR_REPO_. Afterwards we force update the _sotd-ecs-service_ running on the _sotd-cluster_. After ECS updates the service (which should take a few seconds), the new image should be in used and the app updated.
 
 ## Running the application locally
 
+Before we can run the app locally we have to build it: `make`. Additionally we have to define 3 environment variables that the app is expecting: _CLIENT_SECRET_, _CLIENT_ID_ and, _POSTGRES_URL_. The first two are very easy and we can just add the following to the `~/.bash_profile`:
 
-# TODO terraform import aws_secretsmanager_secret.example arn:aws:secretsmanager:us-east-1:123456789012:secret:example-123456
-# TODO aws ecr get-login-password --region $TF_VAR_region
+```
+export CLIENT_ID=$TF_VAR_twitter_client_id
+export CLIENT_SECRET=$TF_VAR_twitter_client_secret
+```
+
+Since the app needs a database to run against we can _borrow_ the one that the integration tests use. To do this, simply add the following to the `~/.bash_profile`:
+
+```
+export POSTGRES_URL=postgres://postgres:mysecretpassword@$postgres:5432/somethingoftheday?sslmode=disable
+```
+
+Now run in another terminal window run:
+
+```
+docker-compose up db
+```
+
+The DB should now be running, and accessible to other containers via the _something-of-the-day_integration-tests_ network. To start the app inside this network we run:
+
+```
+make run_with_localdb
+```
+
+On the other hand, if you wish to run the app in the default bridge network you can simply run:
+
+```
+make run
+```
+
+Once you're done with the DB and nothing is using it you can bring it all down by running:
+
+```
+make clean
+```
+
+## Checking the logs 
+
+While the _something-of-the-day_ container is running it will show application logs.
+
+To get the production logs you must first SSH into your EC2 instance. Once inside we need to find the name of the container running the app:
+
+```
+docker ps
+```
+
+To read the logs we then simply run
+
+```
+docker logs <the_container's_name> | less
+docker logs <the_container's_name> | grep "whatever I'm trying to find"
+```
+
+## Possible Improvements
+
+* The way I'm overriding terraform variables is perhaps not the cleanest one and caused a few duplications in the `~/.bash_profile`.
+* Unprovisioning the env with terraform leaves behind AWS secrets, as AWS does not delete them immediately. This can cause problems if we want later to re-provision everything.
+* Non master branches do not save images to the ECR repo but could do so. 
+* The ECS roles created for this app can potentially collide with ones already existing if the terraform scripts are ran on AWS accounts with existing ECS clusters.
