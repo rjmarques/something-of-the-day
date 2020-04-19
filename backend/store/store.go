@@ -1,7 +1,9 @@
 package store
+
 import (
 	"math/rand"
 	"sync"
+	"time"
 
 	"github.com/rjmarques/something-of-the-day/model"
 )
@@ -13,6 +15,7 @@ type Store struct {
 }
 
 func NewStore() *Store {
+	rand.Seed(time.Now().UnixNano())
 	return &Store{
 		index: map[int64]*model.Something{},
 	}
@@ -40,7 +43,7 @@ func (st *Store) GetRand() *model.Something {
 		return nil
 	}
 
-	index := rand.Int() % len(st.somethings)
+	index := rand.Intn(len(st.somethings))
 	return st.somethings[index]
 }
 
@@ -54,4 +57,3 @@ func (st *Store) GetLatest() *model.Something {
 
 	return st.somethings[len(st.somethings)-1] // need to be careful of the order the API returns tweets. Pos 0 has the latest but shouldn't...
 }
-
