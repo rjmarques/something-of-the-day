@@ -29,5 +29,5 @@ yarn-error.log*
 # docker
 env.list
 
-# build
-.output
+# deployment
+deploy.output
