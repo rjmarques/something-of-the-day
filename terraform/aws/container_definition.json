@@ -1,0 +1,21 @@
+{
+  "name": "something-of-the-day",
+  "image": "${repository_url}:latest",
+  "essential": true,
+  "memory": 128,
+  "cpu": 256,
+  "secrets": [
+    {
+      "name": "POSTGRES_URL",
+      "valueFrom": "${db_url}"
+    },
+    {
+      "name": "CLIENT_ID",
+      "valueFrom": "${twitter_client_id}"
+    },
+    {
+      "name": "CLIENT_SECRET",
+      "valueFrom": "${twitter_client_secret}"
+    }
+  ]
+}

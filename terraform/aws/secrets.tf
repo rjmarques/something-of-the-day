@@ -4,7 +4,7 @@ resource "aws_secretsmanager_secret" "sotd_db_url" {
 
 resource "aws_secretsmanager_secret_version" "sotd_db_url_value" {
   secret_id     = aws_secretsmanager_secret.sotd_db_url.id
-  secret_string = data.heroku_app.sotd.config_vars.DATABASE_URL
+  secret_string = var.postgres_url
 }
 
 resource "aws_secretsmanager_secret" "sotd_twitter_client_id" {

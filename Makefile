@@ -39,7 +39,7 @@ run:
 
 deploy:
 	echo "Deploying the app to ECS"
-	aws ecr get-login-password --region ${TF_VAR_region} | docker login --username AWS --password-stdin ${ECR}
-	docker tag rjmarques/something-of-the-day:latest ${ECR_REPO}:latest
-	docker push ${ECR_REPO}:latest
-	aws ecs update-service --cluster sotd-cluster --service sotd-ecs-service --region ${TF_VAR_region} --force-new-deployment | cat
+	aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR}
+	docker tag rjmarques/something-of-the-day:latest ${ECR_SOTD_REPO}:latest
+	docker push ${ECR_SOTD_REPO}:latest
+	aws ecs update-service --cluster sotd-cluster --service sotd-ecs-service --region ${AWS_REGION} --force-new-deployment | cat
