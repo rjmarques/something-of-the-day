@@ -36,6 +36,7 @@ func apiServer(st *store.Store) http.Handler {
 }
 
 func (sv *server) getSomethingHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
 	something := sv.st.GetRand()
 	json.NewEncoder(w).Encode(something)
 }
