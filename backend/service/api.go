@@ -30,8 +30,7 @@ func apiServer(st *store.Store) http.Handler {
 		http.ServeFile(w, r, "frontend/index.html")
 	})
 
-	compressedRouter := handlers.CompressHandler(r)
-	loggedRouter := handlers.LoggingHandler(os.Stdout, compressedRouter)
+	loggedRouter := handlers.LoggingHandler(os.Stdout, r)
 
 	return loggedRouter
 }
