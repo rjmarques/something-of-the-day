@@ -37,7 +37,7 @@ This document assumes you're able to place env vars in your `~/.bash_profile`, o
 
 ## Terraform module
 
-This application exports a Terraform module from [./terraform/aws](https://github.com/rjmarques/something-of-the-day/blob/master/terraform/aws). The module follows a module API defined in my [ECS cluster repo](https://github.com/rjmarques/my-ecs-clustery). Thus, the provisioning is done from that repo and this most initializes some required resources and outputs this app's ECS container definition.
+This application exports a Terraform module from [./terraform/aws](https://github.com/rjmarques/something-of-the-day/blob/master/terraform/aws). The module follows a module API defined in my [ECS cluster repo](https://github.com/rjmarques/my-ecs-cluster). Thus, the provisioning is done from that repo and this most initializes some required resources and outputs this app's ECS container definition.
 
 Additionally, When provisioning this module we get the following ecr repository as output:
 
@@ -84,7 +84,7 @@ During deployment we'll need the full URL. As such, we add the following to the 
 export ECR_SOTD_REPO=$ECR/something-of-the-day
 ```
 
-Note: this project assumes some variables set from the [ECS cluster repo](https://github.com/rjmarques/my-ecs-clustery) have already been defined (e.g., _\$ECR_).
+Note: this project assumes some variables set from the [ECS cluster repo](https://github.com/rjmarques/my-ecs-cluster) have already been defined (e.g., _\$ECR_).
 
 ## Application building and deployment
 
@@ -105,9 +105,19 @@ The first time `make` is run it can take a while to finish, as new images are pu
 
 ### make deploy
 
+Deployment assumes there's already a cluster ready to run this application. Deploying said cluster falls outside the scope of this documentation. If you want more info on how to deploy your own ECS cluster you may checkout [my-ecs-cluster](https://github.com/rjmarques/my-ecs-cluster).
+
+The Makefile assumes the presence of a few env vars used to push the image and restart the ECS service where this app runs. These must be added to `~/.bash_profile` as:
+
+```
+export AWS_REGION=eu-west-2            # the region where my cluster is running
+export ECS_CLUSTER=hobby-cluster       # the name of my cluster
+export ECS_SERVICE=hobby-ecs-service   # the name of the ECS service running on my cluster
+```
+
 Once `make` has been run, and _rjmarques/something-of-the-day_ is created, we can push the image to the ECR repository and consequently update the ECS service that's using it, thus fully deploying the app.
 
-To push to ECR we first tag the image with the ECR URL, represented by _ECR_REPO_. Afterwards we force update the _sotd-ecs-service_ running on the _sotd-cluster_. After ECS updates the service (which should take a few seconds), the new image should be in use and the app updated.
+To push to ECR we first tag the image with the ECR URL, represented by _ECR_SOTD_REPO_. Afterwards we force update the _ECS_SERVICE_ running on the _ECS_CLUSTER_. After ECS updates the service (which should take a few seconds), the new image should be in use and the app updated.
 
 ## Running the application locally
 
