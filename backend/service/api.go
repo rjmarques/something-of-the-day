@@ -30,13 +30,13 @@ func apiServer(st *store.Store) http.Handler {
 		http.ServeFile(w, r, "frontend/index.html")
 	})
 
-	compressedRouter := handlers.CompressHandler(r)
-	loggedRouter := handlers.LoggingHandler(os.Stdout, compressedRouter)
+	loggedRouter := handlers.LoggingHandler(os.Stdout, r)
 
 	return loggedRouter
 }
 
 func (sv *server) getSomethingHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
 	something := sv.st.GetRand()
 	json.NewEncoder(w).Encode(something)
 }
