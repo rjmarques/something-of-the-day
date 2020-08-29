@@ -6,7 +6,7 @@ RUN GOOS=linux GOARCH=amd64 go build
 FROM something-frontend-build-img as frontend-build
 RUN ls -la
 RUN whoami
-RUN npm run build
+RUN sudo npm run build
 
 ## Final container that holds the artifacts
 FROM alpine:3.11 
