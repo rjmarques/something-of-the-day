@@ -5,4 +5,7 @@ RUN apk update \
 ADD . /root/workspace/something-of-the-day
 WORKDIR /root/workspace/something-of-the-day
 
+# for circle ci builds
+RUN chmod 777 -R .
+
 RUN npm install
