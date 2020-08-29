@@ -4,9 +4,10 @@ RUN GOOS=linux GOARCH=amd64 go build
 
 ## Frontend build
 FROM something-frontend-build-img as frontend-build
+RUN mkdir build
+RUN chmod -R 777 .
 RUN ls -la
 RUN whoami
-RUN mkdir build
 RUN npm run build
 
 ## Final container that holds the artifacts
