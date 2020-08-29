@@ -8,4 +8,5 @@ WORKDIR /root/workspace/something-of-the-day
 RUN npm install
 
 RUN ls -la ./public
+RUN npm cache clean --force
 RUN npm run build
