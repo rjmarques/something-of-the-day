@@ -6,3 +6,5 @@ ADD . /root/workspace/something-of-the-day
 WORKDIR /root/workspace/something-of-the-day
 
 RUN npm install
+
+RUN npm run build

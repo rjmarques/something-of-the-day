@@ -4,11 +4,6 @@ RUN GOOS=linux GOARCH=amd64 go build
 
 ## Frontend build
 FROM something-frontend-build-img as frontend-build
-RUN mkdir build
-RUN chmod -R 777 .
-RUN ls -la
-RUN whoami
-RUN cp /root/workspace/something-of-the-day/public/favicon.ico /root/workspace/something-of-the-day/build/favicon.ico
 RUN npm run build
 
 ## Final container that holds the artifacts
