@@ -8,9 +8,6 @@ RUN apk update \
 ADD . /root/workspace/something-of-the-day
 WORKDIR /root/workspace/something-of-the-day
 
-# for circle ci builds
-RUN chmod 777 -R .
-
 # get dependencies
 RUN go mod download
 

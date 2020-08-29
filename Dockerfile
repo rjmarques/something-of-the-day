@@ -12,6 +12,7 @@ RUN apk update \
     && apk add --no-cache bash
 
 WORKDIR /home/something-of-the-day
+RUN chmod 777 -R .
 
 COPY --from=backend-build /root/workspace/something-of-the-day/something-of-the-day .
 
