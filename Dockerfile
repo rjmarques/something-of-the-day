@@ -1,11 +1,11 @@
 ## Backend build
 FROM something-backend-build-img as backend-build
-RUN chmod 777 -R .
 RUN GOOS=linux GOARCH=amd64 go build
 
 ## Frontend build
 FROM something-frontend-build-img as frontend-build
-RUN chmod 777 -R .
+RUN ls -la
+RUN whoami
 RUN npm run build
 
 ## Final container that holds the artifacts
