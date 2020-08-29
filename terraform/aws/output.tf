@@ -1,5 +1,5 @@
 output "ecr_repository_url" {
-  value = data.aws_ecr_repository.sotd-repo.repository_url
+  value = aws_ecr_repository.sotd-repo.repository_url
 }
 
 output "container_definition" {
