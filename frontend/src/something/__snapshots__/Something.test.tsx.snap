@@ -103,7 +103,7 @@ exports[`renders correctly 1`] = `
     <div>
       <span>
         © Copyright 
-        2020
+        2022
          
         <a
           href="https://ricardomarques.dev"
@@ -213,7 +213,7 @@ exports[`renders correctly 2`] = `
     <div>
       <span>
         © Copyright 
-        2020
+        2022
          
         <a
           href="https://ricardomarques.dev"
