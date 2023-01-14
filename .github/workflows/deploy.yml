@@ -32,9 +32,15 @@ jobs:
       - name: backend tests
         run: make test_backend
 
+      - name: integration tests
+        run: make test_integration
+
       - name: tear down build environment
         run: make clean
 
-      # - name: push to ECR and deploy to ECS
-      #   # if: github.ref == 'refs/heads/master'
-      #   run: make deploy
+      - name: build the image
+        run: make build
+
+      - name: push to ECR and deploy to ECS
+        #   # if: github.ref == 'refs/heads/master'
+        run: make deploy
