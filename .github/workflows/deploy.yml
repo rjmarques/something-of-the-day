@@ -42,5 +42,5 @@ jobs:
         run: make build
 
       - name: push to ECR and deploy to ECS
-        #   # if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         run: make deploy
