@@ -1,0 +1,40 @@
+name: Deploy Something of the Day Workflow
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "*"
+
+env:
+  AWS_REGION: eu-west-2
+  AWS_DEFAULT_REGION: eu-west-2
+  ECR: 661157442746.dkr.ecr.eu-west-2.amazonaws.com
+  ECR_SOTD_REPO: 661157442746.dkr.ecr.eu-west-2.amazonaws.com/something-of-the-day
+  ECS_CLUSTER: hobby-cluster
+  ECS_SERVICE: hobby-ecs-service
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: start Docker build environment
+        run: make build_env
+
+      - name: ui tests
+        run: make test_ui
+
+      - name: backend tests
+        run: make test_backend
+
+      - name: tear down build environment
+        run: make clean
+
+      # - name: push to ECR and deploy to ECS
+      #   # if: github.ref == 'refs/heads/master'
+      #   run: make deploy
