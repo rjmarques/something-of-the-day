@@ -1,7 +1,5 @@
 # Something of the day
 
-[![CircleCI](https://circleci.com/gh/rjmarques/something-of-the-day/tree/master.svg?style=svg)](https://circleci.com/gh/rjmarques/something-of-the-day/tree/master)
-
 https://something.ricardomarq.com
 
 This document explains how to build and deploy the **something-of-the-day App**. The app is a completely over-engineered React Single Page Web App that has a Golang backend and connects to a PG database. The app runs locally on Docker, is deployed to AWS ECS and links to an Heroku database. There's also a CI workflow set up on CircleCI, that automatically deploys the app when code is merged to master and passes all the tests.
@@ -31,7 +29,7 @@ _NOTE: this documentation was written on April 2020. Commands and Versions might
 
 This document assumes you're able to place env vars in your `~/.bash_profile`, or equivalent. From now on I'll only refer to the `~/.bash_profile`. I'm also going to assume you reload your profile after adding new env vars. For example by running:
 
-```
+```bash
 . ~/.bash_profile
 ```
 
@@ -49,7 +47,7 @@ We'll need this at a later point in this tutorial, so be sure to save it somewhe
 
 This app gets its _somethings_ entirely from Twitter, specifically this account: https://twitter.com/lgst_something. You'll need to go to the Twitter [developer section](https://developer.twitter.com/en/apps) and create a new app and copy the API keys. Once you have them add them to your `~/.bash_profile` as:
 
-```
+```bash
 export TF_VAR_twitter_client_id=<your_API_key>
 export TF_VAR_twitter_client_secret=<your_API_secret_key>
 ```
@@ -66,7 +64,7 @@ Assuming you already have one running database, we then create the required sche
 
 Ensure you have docker running:
 
-```
+```bash
 docker version
 ```
 
@@ -80,7 +78,7 @@ The domain part of the URL identifies your account and region, on AWS's ECR serv
 
 During deployment we'll need the full URL. As such, we add the following to the `~/.bash_profile`:
 
-```
+```bash
 export ECR_SOTD_REPO=$ECR/something-of-the-day
 ```
 
@@ -109,7 +107,7 @@ Deployment assumes there's already a cluster ready to run this application. Depl
 
 The Makefile assumes the presence of a few env vars used to push the image and restart the ECS service where this app runs. These must be added to `~/.bash_profile` as:
 
-```
+```bash
 export AWS_REGION=eu-west-2            # the region where my cluster is running
 export ECS_CLUSTER=hobby-cluster       # the name of my cluster
 export ECS_SERVICE=hobby-ecs-service   # the name of the ECS service running on my cluster
@@ -123,38 +121,38 @@ To push to ECR we first tag the image with the ECR URL, represented by _ECR_SOTD
 
 Before we can run the app locally we have to build it: `make`. Additionally we have to define 3 environment variables that the app is expecting: _CLIENT_SECRET_, _CLIENT_ID_ and, _POSTGRES_URL_. The first two are very easy and we can just add the following to the `~/.bash_profile`:
 
-```
+```bash
 export CLIENT_ID=$TF_VAR_twitter_client_id
 export CLIENT_SECRET=$TF_VAR_twitter_client_secret
 ```
 
 Since the app needs a database to run against we can _borrow_ the one that the integration tests use. To do this, simply add the following to the `~/.bash_profile`:
 
-```
+```bash
 export POSTGRES_URL=postgres://postgres:mysecretpassword@postgres:5432/somethingoftheday?sslmode=disable
 ```
 
 Now run in another terminal window run:
 
-```
+```bash
 docker-compose up db
 ```
 
 The DB should now be running, and accessible to other containers via the _something-of-the-day_integration-tests_ network. To start the app inside this network we run:
 
-```
+```bash
 make run_with_localdb
 ```
 
 On the other hand, if you wish to run the app in the default bridge network you can simply run:
 
-```
+```bash
 make run
 ```
 
 Once you're done with the DB and nothing is using it you can bring it all down by running:
 
-```
+```bash
 make clean
 ```
 
@@ -166,13 +164,13 @@ To get the production logs you must first SSH into your EC2 instance. To find it
 
 Once inside we need to find the name of the container running the app:
 
-```
+```bash
 docker ps
 ```
 
 To read the logs we then simply run:
 
-```
+```bash
 docker logs <the_container's_name> | less
 docker logs <the_container's_name> | grep "whatever I'm trying to find"
 ```
