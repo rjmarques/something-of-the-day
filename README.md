@@ -1,6 +1,6 @@
 # Something of the day
 
-https://something.ricardomarq.com
+https://something.ricardomarques.dev
 
 This document explains how to build and deploy the **something-of-the-day App**. The app is a completely over-engineered React Single Page Web App that has a Golang backend and connects to a PG database. The app runs locally on Docker, is deployed to AWS ECS and links to an Heroku database. There's also a CI workflow set up on CircleCI, that automatically deploys the app when code is merged to master and passes all the tests.
 
